@@ -1,3 +1,3 @@
-export default function Login() {
-  return <h1>KnowledgeGraph</h1>;
+export default function KnowledgeGraph() {
+  return <h1 className="text-4xl">Knowledge Graph</h1>;
 }

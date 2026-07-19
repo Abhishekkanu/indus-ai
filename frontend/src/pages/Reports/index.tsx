@@ -1,3 +1,3 @@
-export default function Login() {
-  return <h1>Reports</h1>;
+export default function Reports() {
+  return <h1 className="text-4xl">Reports</h1>;
 }

@@ -1,3 +1,3 @@
-export default function Login() {
-  return <h1>Chat</h1>;
+export default function Chat() {
+  return <h1 className="text-4xl">AI Chat</h1>;
 }

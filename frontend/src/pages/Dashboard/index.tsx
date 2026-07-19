@@ -1,15 +1,33 @@
+import { useEffect, useState } from "react";
+import api from "../../api/api";
 import StatsCard from "../../components/dashboard/StatsCard";
 import QuickActions from "../../components/dashboard/QuickActions";
 import RecentActivity from "../../components/dashboard/RecentActivity";
 import AIInsights from "../../components/dashboard/AIInsights";
 
 export default function Dashboard() {
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+  api
+    .get("/hello")
+    .then((response) => {
+      setMessage(response.data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}, []);
+
   return (
     <div>
 
       <h1 className="text-4xl font-bold mb-8">
         Welcome Back 👋
       </h1>
+
+      <p className="text-green-600 text-lg mt-2">
+  {message}
+</p>
 
       <div className="grid grid-cols-4 gap-6 mb-8">
         <StatsCard title="Documents" value="124" color="border-blue-500" />

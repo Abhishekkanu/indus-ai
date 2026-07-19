@@ -1,29 +1,34 @@
-import FileCard from "../FileCard";
+interface Props {
+  files: File[];
+}
 
-const files = [
-  {
-    name: "Pump_Manual.pdf",
-    status: "Ready",
-  },
-  {
-    name: "Inspection_Report.pdf",
-    status: "OCR Running",
-  },
-  {
-    name: "Safety_SOP.pdf",
-    status: "Processing",
-  },
-];
-
-export default function UploadList() {
+export default function UploadList({ files }: Props) {
   return (
     <div className="space-y-4">
 
       {files.map((file) => (
-        <FileCard
+        <div
           key={file.name}
-          {...file}
-        />
+          className="bg-white rounded-lg shadow p-4 flex justify-between"
+        >
+
+          <div>
+
+            <h3 className="font-semibold">
+              {file.name}
+            </h3>
+
+            <p className="text-sm text-gray-500">
+              {(file.size / 1024).toFixed(2)} KB
+            </p>
+
+          </div>
+
+          <span className="text-green-600">
+            Selected
+          </span>
+
+        </div>
       ))}
 
     </div>

@@ -1,5 +1,5 @@
 package com.indusai.backend.controller;
-
+import com.indusai.backend.service.DocumentService;
 import com.indusai.backend.model.UploadResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +11,11 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api")
 public class UploadController {
+    private final DocumentService documentService;
+
+public UploadController(DocumentService documentService) {
+    this.documentService = documentService;
+}
 
     private static final String UPLOAD_DIR =
         System.getProperty("user.dir") + "/uploads/";
@@ -26,15 +31,21 @@ public class UploadController {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
+File destination = new File(UPLOAD_DIR + file.getOriginalFilename());
 
-            File destination = new File(UPLOAD_DIR + file.getOriginalFilename());
+file.transferTo(destination);
 
-            file.transferTo(destination);
+// Save metadata in MongoDB
+documentService.saveDocument(
+        file.getOriginalFilename(),
+        file.getSize(),
+        file.getContentType()
+);
 
-            return new UploadResponse(
-                    file.getOriginalFilename(),
-                    "File uploaded successfully!"
-            );
+return new UploadResponse(
+        file.getOriginalFilename(),
+        "File uploaded successfully!"
+);
 
         } catch (IOException e) {
 
